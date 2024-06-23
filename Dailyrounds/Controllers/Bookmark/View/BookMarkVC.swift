@@ -24,9 +24,6 @@ class BookMarkVC: UIViewController {
     @IBOutlet weak var viewSearch: UIView!
     @IBOutlet var btnSort: [UIButton]!
     
-    
-
-    
     lazy var viewModel: BookMarkViewModel = BookMarkViewModel()
     
     /// viewDidLoad
