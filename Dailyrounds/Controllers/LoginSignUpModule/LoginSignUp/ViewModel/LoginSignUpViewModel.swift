@@ -165,7 +165,7 @@ extension LoginSignUpViewModel {
     }
     /// check valid password like Abc@1234
     private func isValidPassword(_ password:String) -> Bool {
-        let regex = "^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[a-z]).{8,}$"
+        let regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$"
         let range = password.range(of: regex, options:.regularExpression)
         let result = range != nil ? true : false
         return !result

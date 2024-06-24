@@ -114,14 +114,31 @@ class BookMarkVC: UIViewController {
 }
 // MARK: - UITextFieldDelegate
 extension BookMarkVC: UITextFieldDelegate{
-    /// mathod called when you search
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard let text = textField.text,text.count > 2  else {return}
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        /// Invalidate the previous timer
+        viewModel.typingTimer?.invalidate()
+        
+        /// Schedule a new timer to call the API after a pause
+        viewModel.typingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(callAPI), userInfo: nil, repeats: false)
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func callAPI() {
+        /// Call your API here
+        guard let text = textSearch.text, text.count>2  else { return }
         viewModel.pagination.search = text
         viewModel.pagination.current = 1
         self.startLoading(sender: self.view)
         self.viewModel.fetchBooks()
+        
     }
+
     /// mathod called when you click on cross button
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         viewModel.pagination.search = ""

@@ -50,6 +50,9 @@ class BookmarkTableCell: UITableViewCell {
             lblRatingCount.text = "\(savedDetails.ratingsCount)"
             lblTitle.text = savedDetails.title ?? ""
             lblAuthorName.text = savedDetails.authorName ?? ""
+            if let url = "https://covers.openlibrary.org/b/id/\(savedDetails.coverI ?? 0)-M.jpg".makeURL() {
+                self.ic_image.sd_setImage(with: url, placeholderImage: nil)
+            }
         }
     }
 }

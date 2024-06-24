@@ -19,9 +19,10 @@ class RootView {
         window.rootViewController = navigationController
         
         if animated {
-            UIView.transition(with: window, duration: 0.5, options: .curveEaseInOut, animations: nil, completion: nil)
+            UIView.transition(with: window, duration: 0.5, options: UIView.AnimationOptions.transitionCrossDissolve, animations: { () -> Void in
+                //self.window!.backgroundColor = UIColor.white
+                window.makeKeyAndVisible()
+            })
         }
-        window.makeKeyAndVisible()
-
     }
 }

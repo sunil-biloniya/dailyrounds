@@ -24,6 +24,8 @@ class BookMarkViewModel {
     var pagination: Pagination = Pagination()
     var onUpdate: (() -> Void)?
     var onError: ((String) -> Void)?
+    var typingTimer: Timer?
+    
     /// static messages
     private let msg = "Something went wrong!"
     private let internetConnection = "Internet connection appears offline."
@@ -43,6 +45,7 @@ class BookMarkViewModel {
                 return
             }
             
+            debugPrint(url)
             let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
                 guard let self = self else { return }
                 if let error = error {
@@ -65,15 +68,16 @@ class BookMarkViewModel {
                 do {
                     let response = try JSONDecoder().decode(BookmarkModel.self, from: data)
                     DispatchQueue.main.async {
-                        if let books = response.docs {
+                        if let book = response.docs {
                             if self.pagination.current == 1 {
-                                self.books = books
+                                self.books = book
                             } else {
-                                self.books.append(contentsOf: books)
+                                self.books.append(contentsOf: book)
                             }
+                            debugPrint(self.books.count)
                             self.pagination.current = response.offset ?? 0
-                            
                         }
+                        
                         if self.currentSortingOption != .none {
                             self.sortBooks(by: self.currentSortingOption)
                         }

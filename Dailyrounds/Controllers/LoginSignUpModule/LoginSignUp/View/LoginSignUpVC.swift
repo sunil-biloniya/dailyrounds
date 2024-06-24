@@ -17,6 +17,7 @@ class LoginSignUpVC: UIViewController {
     @IBOutlet weak var textEmail: TextFieldView!
     @IBOutlet weak var textPassward: TextFieldView!
     @IBOutlet weak var countryPicker: UIPickerView!
+    @IBOutlet weak var stackPassInstruction: UIStackView!
     
     lazy var viewModel: LoginSignUpViewModel = LoginSignUpViewModel()
     
@@ -32,6 +33,7 @@ class LoginSignUpVC: UIViewController {
     ///  textfield placehoder or picker view data source and delegate
     private func setUpData(){
         self.countryPicker.isHidden = viewModel.loginType == .login
+        self.stackPassInstruction.isHidden = viewModel.loginType == .login
         self.lblLetsGo.text = viewModel.buttonTitle
         self.lblMessage.text = viewModel.message
         self.textEmail.setUp(title: "Email", key: .emailAddress)
