@@ -25,7 +25,9 @@ class LoginSignUpVC: UIViewController {
         super.viewDidLoad()
         self.setUpData()
         self.setupViewModel()
+        
         if viewModel.loginType == .signup {
+            self.viewModel.currentCountry = viewModel.getCountry()
             self.startLoading(sender: self.view)
             self.viewModel.fetchCountry()
         }

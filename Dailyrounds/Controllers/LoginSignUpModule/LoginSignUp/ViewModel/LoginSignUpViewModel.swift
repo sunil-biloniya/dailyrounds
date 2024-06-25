@@ -28,6 +28,7 @@ class LoginSignUpViewModel {
     var onUpdate: (() -> Void)?
     var onError: ((String) -> Void)?
     var errorMsg: String? = nil
+    var currentCountry : String?
     
     /// static messages
     private let msg = "Something went wrong!"
@@ -101,15 +102,13 @@ class LoginSignUpViewModel {
     }
     
     /// get user country
-    var currentCountry : String? {
-        didSet {
-            if let countryCode = Locale.current.regionCode,
-               let countryName = Locale.current.localizedString(forRegionCode: countryCode) {
-                currentCountry = countryName
-            } else {
-                currentCountry = nil
-            }
-        }        
+    func getCountry()->String?{
+        if let countryCode = Locale.current.regionCode,
+           let countryName = Locale.current.localizedString(forRegionCode: countryCode) {
+            return countryName
+        } else {
+            return nil
+        }
     }
    
 }
